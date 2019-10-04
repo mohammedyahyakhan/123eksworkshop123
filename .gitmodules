@@ -1,0 +1,8 @@
+[submodule "quickstart-amazon-eks"]
+	path = quickstart-amazon-eks
+	url = git@github.com:aws-quickstart/quickstart-amazon-eks.git
+	branch = master
+[submodule "submodules/quickstart-amazon-eks.git"]
+	path = submodules/quickstart-amazon-eks.git
+	url = git@github.com:aws-quickstart/quickstart-amazon-eks.git
+	branch = master
