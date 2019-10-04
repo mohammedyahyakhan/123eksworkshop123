@@ -5,11 +5,11 @@
     },
     {
         "ParameterKey": "EmailAddress",
-        "ParameterValue": "email@yourdomain.com"
+        "ParameterValue": "mohdyahyakhan05@gmail.com"
     },
     {
         "ParameterKey": "KeyPairName",
-        "ParameterValue": "YOUR-KEYPAIR-HERE"
+        "ParameterValue": "eks"
     },
     {
         "ParameterKey": "RemoteAccessCIDR",
@@ -21,7 +21,7 @@
     },
     {
         "ParameterKey": "QSS3KeyPrefix",
-        "ParameterValue": "qs-workshop/"
+        "ParameterValue": "eksworkshop/"
     },
     {
         "ParameterKey": "QSS3BucketName",

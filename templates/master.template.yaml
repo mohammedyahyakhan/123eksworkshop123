@@ -2,105 +2,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Deploys an EKS cluster in a new VPC (qs-1p7nknoht)
 Metadata:
-  LintSpellExclude:
-    - Kubernetes
-    - ARNs
-    - Resource Names
-    - autoscaler
-    - IOPS
-    - EfsStorageClass
-    - Lambda
-    - maxIO
-  AWS::CloudFormation::Interface:
-    ParameterGroups:
-      - Label:
-          default: VPC network configuration
-        Parameters:
-          - AvailabilityZones
-          - VPCCIDR
-          - PrivateSubnet1CIDR
-          - PrivateSubnet2CIDR
-          - PrivateSubnet3CIDR
-          - PublicSubnet1CIDR
-          - PublicSubnet2CIDR
-          - PublicSubnet3CIDR
-          - RemoteAccessCIDR
-      - Label:
-          default: Amazon EC2 configuration
-        Parameters:
-          - KeyPairName
-      - Label:
-          default: Amazon EKS configuration
-        Parameters:
-          - NodeInstanceType
-          - NumberOfNodes
-          - NodeGroupName
-          - NodeVolumeSize
-          - AdditionalEKSAdminArns
-          - KubernetesVersion
-      - Label:
-          default: Optional Kubernetes add-ins
-        Parameters:
-          - ClusterAutoScaler
-          - EfsStorageClass
-          - EfsPerformanceMode
-          - EfsThroughputMode
-          - EfsProvisionedThroughputInMibps
-      - Label:
-          default: AWS Quick Start configuration
-        Parameters:
-          - QSS3BucketName
-          - QSS3KeyPrefix
-          - LambdaZipsBucketName
-    ParameterLabels:
-      AvailabilityZones:
-        default: Availability Zones
-      KeyPairName:
-        default: SSH key name
-      PrivateSubnet1CIDR:
-        default: Private subnet 1 CIDR
-      PrivateSubnet2CIDR:
-        default: Private subnet 2 CIDR
-      PrivateSubnet3CIDR:
-        default: Private subnet 3 CIDR
-      PublicSubnet1CIDR:
-        default: Public subnet 1 CIDR
-      PublicSubnet2CIDR:
-        default: Public subnet 2 CIDR
-      PublicSubnet3CIDR:
-        default: Public subnet 3 CIDR
-      QSS3BucketName:
-        default: Quick Start S3 bucket name
-      QSS3KeyPrefix:
-        default: Quick Start S3 key prefix
-      RemoteAccessCIDR:
-        default: Allowed external access CIDR
-      VPCCIDR:
-        default: VPC CIDR
-      NodeInstanceType:
-        default: Nodes instance type
-      NumberOfNodes:
-        default: Number of nodes
-      NodeGroupName:
-        default: Node group name
-      NodeVolumeSize:
-        default: Node volume size
-      AdditionalEKSAdminArns:
-        default: Additional EKS admin ARNs
-      KubernetesVersion:
-        default: Kubernetes version
-      LambdaZipsBucketName:
-        default: Lambda zips bucket name
-      ClusterAutoScaler:
-        default: Cluster autoscaler
-      EfsStorageClass:
-        default: EFS storage class
-      EfsPerformanceMode:
-        default: EFS performance mode
-      EfsThroughputMode:
-        default: EFS throughput mode
-      EfsProvisionedThroughputInMibps:
-        default: EFS provisioned throughput in Mibps
+  
 Parameters:
   AvailabilityZones:
     Description: The list of Availability Zones to use for the subnets in the VPC. Three
@@ -337,27 +239,11 @@ Rules:
              - ap-south-1
           - !Ref 'AWS::Region'
 Resources:
-VPCStack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template'
-      Parameters:
-        AvailabilityZones: !Join [ ',', !Ref 'AvailabilityZones' ]
-        KeyPairName: !Ref 'KeyPairName'
-        NumberOfAZs: '3'
-        PrivateSubnet1ACIDR: !Ref 'PrivateSubnet1CIDR'
-        PrivateSubnet2ACIDR: !Ref 'PrivateSubnet2CIDR'
-        PrivateSubnet3ACIDR: !Ref 'PrivateSubnet3CIDR'
-        PrivateSubnetATag2: "kubernetes.io/role/internal-elb="
-        PublicSubnet1CIDR: !Ref 'PublicSubnet1CIDR'
-        PublicSubnet2CIDR: !Ref 'PublicSubnet2CIDR'
-        PublicSubnet3CIDR: !Ref 'PublicSubnet3CIDR'
-        PublicSubnetTag2: "kubernetes.io/role/elb="
-        VPCCIDR: !Ref 'VPCCIDR'
+
   EKSStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/amazon-eks.template.yaml'
+      TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-amazon-eks.git/templates/amazon-eks.template.yaml'
       Parameters:
         PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
         PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
