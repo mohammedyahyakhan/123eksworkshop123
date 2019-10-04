@@ -383,3 +383,14 @@ VPCStack:
         EfsPerformanceMode: !Ref EfsPerformanceMode
         EfsThroughputMode: !Ref EfsThroughputMode
         EfsProvisionedThroughputInMibps: !Ref EfsProvisionedThroughputInMibps
+Outputs:
+  KubeConfigPath:
+    Value: !GetAtt EKSStack.Outputs.KubeConfigPath
+  HelmLambdaArn:
+    Value: !GetAtt EKSStack.Outputs.HelmLambdaArn
+  KubeManifestLambdaArn:
+    Value: !GetAtt EKSStack.Outputs.KubeManifestLambdaArn
+  BastionIP:
+    Value: !GetAtt EKSStack.Outputs.BastionIP
+  EKSClusterName:
+    Value: !GetAtt EKSStack.Outputs.EKSClusterName        
